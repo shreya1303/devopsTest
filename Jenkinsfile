@@ -1,62 +1,25 @@
 pipeline {
     agent any
-
-    environment {
-        PYTHON_VERSION = '3.11'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                echo '🔄 Checking out code...'
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/shreya1303/devopsTest.git',
+                    credentialsId: 'ecf815ab-0b0f-442a-9767-d2b76edddaf6'
             }
         }
-
-        stage('Setup Python') {
+        stage('Build') {
             steps {
-                echo '🐍 Setting up Python...'
-                // Requires Jenkins plugin: "Python" or use sh with pyenv or docker
-                sh '''
-                    python3 --version
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    pip install --upgrade pip
-                '''
+                sh 'echo Building app...'
+                sh 'python3 --version || python --version'
+                sh 'python3 app.py || python app.py'
             }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                echo '📦 Installing dependencies...'
-                sh '''
-                    source venv/bin/activate
-                    pip install -r requirements.txt || true
-                '''
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                echo '🧪 Running unit tests...'
-                sh '''
-                    source venv/bin/activate
-                    python -m unittest test_calculator.py
-                '''
-            }
-        }
     }
-
-    post {
-        always {
-            echo '🧹 Cleaning up...'
-            sh 'rm -rf venv'
-        }
-        success {
-            echo '✅ Build succeeded!'
-        }
-        failure {
-            echo '❌ Build failed!'
+        stage('Test') {
+            steps {
+                sh 'echo Running tests...'
+                sh 'python3 -m unittest test_app.py'
+            }
         }
     }
 }
