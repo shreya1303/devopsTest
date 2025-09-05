@@ -4,8 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/shreya1303/devopsTest.git',
-                    credentialsId: 'ecf815ab-0b0f-442a-9767-d2b76edddaf6'
+                    url: 'https://github.com/shreya1303/devopsTest.git'
             }
         }
         stage('Build') {
@@ -18,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo Running tests...'
-                sh 'python3 -m unittest test_app.py'
+                sh 'python3 -m unittest calculator_test.py'
             }
         }
     }
