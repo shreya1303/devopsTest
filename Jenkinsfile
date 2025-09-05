@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/shreya1303/devopsTest.git'
+                git branch: 'master',
+                    url: 'https://github.com/shreya1303/devopsTest.git',
+                    credentialsId: 'ecf815ab-0b0f-442a-9767-d2b76edddaf6'
             }
         }
         stage('Build') {
