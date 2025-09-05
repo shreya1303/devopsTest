@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     url: 'https://github.com/shreya1303/devopsTest.git',
                     credentialsId: 'ecf815ab-0b0f-442a-9767-d2b76edddaf6'
             }
@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh 'echo Building app...'
                 sh 'python3 --version || python --version'
-                sh 'python3 app.py || python app.py'
+                sh 'python3 calculator.py || python calculator.py'
             }
     }
         stage('Test') {
